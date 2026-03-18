@@ -1230,12 +1230,19 @@ def handle_set_language(call):
         reply_markup=markup, 
         parse_mode='Markdown'
     )
-    
+def run_bot():
+    while True:
+        try:
+            logging.info("Starting bot polling...")
+            bot.infinity_polling(timeout=10, long_polling_timeout=5, skip_pending=True)
+        except Exception as e:
+            logging.error(f"Bot polling failed: {e}")
+            time.sleep(5) # Wait 5 seconds before trying again to avoid 409 loops
 # --- MAIN EXECUTION ---
 if __name__ == "__main__":
     import os
     logging.info("Starting combined application...")
-
+    threading.Thread(target=run_bot, daemon=True).start()
     # Start the RSS loop
     threading.Thread(target=check_news_loop, daemon=True).start()
     logging.info("RSS Checker Thread started.")
