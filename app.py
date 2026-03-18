@@ -1248,7 +1248,6 @@ if __name__ == "__main__":
     logging.info("RSS Checker Thread started.")
 
     # Start the Telegram Bot
-    threading.Thread(target=bot.infinity_polling, kwargs={'skip_pending': True}, daemon=True).start()
     logging.info("Telegram Bot Thread started.")
 
     # Get the port from Render's environment
