@@ -511,7 +511,8 @@ def process_player_stats(message):
         )
         bot.reply_to(message, reply_text, parse_mode="Markdown", reply_markup=markup)
     except Exception as e:
-        bot.reply_to(message, "⚠️ Error: {}".format(str(e).replace('_', '\\_')), parse_mode="Markdown")
+        error_msg = str(e).replace('_', '\\_')
+        bot.reply_to(message, f"⚠️ Error: {error_msg}", parse_mode="Markdown")
 
 def process_clan_online(message):
     tag = message.text.strip()
