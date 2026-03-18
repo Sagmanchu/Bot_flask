@@ -1232,12 +1232,19 @@ def handle_set_language(call):
     
 # --- MAIN EXECUTION ---
 if __name__ == "__main__":
+    import os
     logging.info("Starting combined application...")
 
+    # Start the RSS loop
     threading.Thread(target=check_news_loop, daemon=True).start()
     logging.info("RSS Checker Thread started.")
 
+    # Start the Telegram Bot
     threading.Thread(target=bot.infinity_polling, kwargs={'skip_pending': True}, daemon=True).start()
     logging.info("Telegram Bot Thread started.")
-    port = int(os.environ.get("PORT", 5000))
+
+    # Get the port from Render's environment
+    port = int(os.environ.get("PORT", 10000))
+    
+    # Start the Flask Application
     app.run(host='0.0.0.0', port=port, debug=False, threaded=True)
